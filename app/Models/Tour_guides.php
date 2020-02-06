@@ -40,6 +40,16 @@ class Tour_guides extends Model
         return $this->belongsTo(Tour::class, 'tour_id');
     }
 
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'id');
+    }
+
+    public function city()
+    {
+        return $this->hasOne(City::class, 'id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

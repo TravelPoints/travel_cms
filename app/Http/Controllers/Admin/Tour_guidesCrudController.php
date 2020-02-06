@@ -29,7 +29,7 @@ class Tour_guidesCrudController extends CrudController
 
     protected function setupListOperation()
     {
-        $this->crud->setColumns(['title', 'description', 'lang', 'order']);
+        $this->crud->setColumns(['title', 'description', 'lang', 'order', 'tour.title', 'country.name', 'city.name']);
     }
 
     protected function setupCreateOperation()
@@ -48,6 +48,22 @@ class Tour_guidesCrudController extends CrudController
             'name' => 'tour_id', // foreign key
             'entity' => 'tour', // the method that defines the relationship in your Model
             'attribute' => 'title', // foreign key attribute that is shown to user
+            'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+        ]);
+        $this->crud->addField([
+            'label' => 'Country',
+            'type' => 'select',
+            'name' => 'country_id', // foreign key
+            'entity' => 'country', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+        ]);
+        $this->crud->addField([
+            'label' => 'City',
+            'type' => 'select',
+            'name' => 'city_id', // foreign key
+            'entity' => 'city', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
             'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
         ]);
     }
