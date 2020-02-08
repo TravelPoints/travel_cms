@@ -16,8 +16,8 @@ class City extends Model
     */
 
     protected $table = 'city';
-     protected $primaryKey = 'id';
-    // public $timestamps = false;
+    protected $primaryKey = 'id';
+    public $timestamps = false;
     protected $guarded = ['id'];
     // protected $fillable = [];
     // protected $hidden = [];

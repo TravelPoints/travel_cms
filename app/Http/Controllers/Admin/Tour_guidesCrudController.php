@@ -52,7 +52,7 @@ class Tour_guidesCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->setFromDb();
-//        $this->crud->setColumns(['title', 'description', 'lang', 'order', 'tour.title', 'country.name', 'city.name']);
+//        $this->crud->setColumns(['title', 'description']);
     }
 
     protected function setupCreateOperation()
