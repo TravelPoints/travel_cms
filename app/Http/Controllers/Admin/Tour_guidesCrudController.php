@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Tour_guidesRequest;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Language;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -27,9 +29,23 @@ class Tour_guidesCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/tour_guides');
         $this->crud->setEntityNameStrings('points', 'points');
 
-        $this->crud->operation('list', function() {
-            $this->crud->addColumn(['name' => 'country.name', 'type' => 'text', 'label' => 'Country']);
-            $this->crud->addColumn(['name' => 'City.name', 'type' => 'text', 'label' => 'Country']);
+        $this->crud->operation('list', function () {
+            $this->crud->addColumn([
+                'name' => 'country.name',
+                'type' => 'text',
+                'label' => 'Country',
+                'entity' => 'country', // the method that defines the relationship in your Model
+                'attribute' => 'name', // foreign key attribute that is shown to user
+                'model' => Country::class,
+            ]);
+            $this->crud->addColumn([
+                'name' => 'city.name',
+                'type' => 'text',
+                'label' => 'City',
+                'entity' => 'city', // the method that defines the relationship in your Model
+                'attribute' => 'name', // foreign key attribute that is shown to user
+                'model' => City::class,
+            ]);
         });
     }
 
