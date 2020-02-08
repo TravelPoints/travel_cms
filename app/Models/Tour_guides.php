@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Tour;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Language;
 
 class Tour_guides extends Model
 {
@@ -42,12 +43,12 @@ class Tour_guides extends Model
 
     public function country()
     {
-        return $this->hasOne(Country::class, 'id');
+        return $this->belongsTo(Country::class, 'id');
     }
 
     public function city()
     {
-        return $this->hasOne(City::class, 'id');
+        return $this->belongsTo(City::class, 'id');
     }
 
     /*
@@ -67,4 +68,10 @@ class Tour_guides extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function lang_id()
+    {
+        return $this->belongsToMany(Language::class, 'tour_guides_langs',
+            'tour_guide_id', 'lang_id');
+    }
 }
