@@ -63,14 +63,14 @@ class Tour_guidesCrudController extends CrudController
 //        $this->crud->addField(['name' => 'order', 'type' => 'number', 'label' => 'Order']);
         $this->crud->addField(['name' => 'lat', 'type' => 'text', 'label' => 'Latitude']);
         $this->crud->addField(['name' => 'lng', 'type' => 'text', 'label' => 'Longitude']);
-        $this->crud->addField([
-            'label' => 'Tour',
-            'type' => 'select',
-            'name' => 'tour_id', // foreign key
-            'entity' => 'tour', // the method that defines the relationship in your Model
-            'attribute' => 'title', // foreign key attribute that is shown to user
-            'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
-        ]);
+//        $this->crud->addField([
+//            'label' => 'Tour',
+//            'type' => 'select',
+//            'name' => 'tour_id', // foreign key
+//            'entity' => 'tour', // the method that defines the relationship in your Model
+//            'attribute' => 'title', // foreign key attribute that is shown to user
+//            'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+//        ]);
         // many-to-many via lang_id() method difficult relations
         $this->crud->addField([
             'label' => 'Language',
