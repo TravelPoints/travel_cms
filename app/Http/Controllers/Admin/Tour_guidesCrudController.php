@@ -60,7 +60,7 @@ class Tour_guidesCrudController extends CrudController
         $this->crud->setValidation(Tour_guidesRequest::class);
         $this->crud->addField(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
         $this->crud->addField(['name' => 'description', 'type' => 'ckeditor', 'label' => 'Description']);
-        $this->crud->addField(['name' => 'order', 'type' => 'number', 'label' => 'Order']);
+//        $this->crud->addField(['name' => 'order', 'type' => 'number', 'label' => 'Order']);
         $this->crud->addField(['name' => 'lat', 'type' => 'text', 'label' => 'Latitude']);
         $this->crud->addField(['name' => 'lng', 'type' => 'text', 'label' => 'Longitude']);
         $this->crud->addField([

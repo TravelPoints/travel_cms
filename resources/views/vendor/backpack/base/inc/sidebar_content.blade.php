@@ -8,3 +8,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('city') }}'><i class='nav-icon fa fa-question'></i> Cities</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('language') }}'><i class='nav-icon fa fa-question'></i> Languages</a></li>
 {{--<li class='nav-item'><a class='nav-link' href='{{ backpack_url('tour_guides_langs') }}'><i class='nav-icon fa fa-question'></i> Tour_guides_langs</a></li>--}}
+
+{{--<li class='nav-item'><a class='nav-link' href='{{ backpack_url('tour_points') }}'><i class='nav-icon fa fa-question'></i> Tour_points</a></li>--}}

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\TourRequest;
+use App\Models\Language;
+use App\Models\Tour_guides;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Tour;
@@ -45,9 +47,17 @@ class TourCrudController extends CrudController
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(TourRequest::class);
-
-        // TODO: remove setFromDb() and manually define Fields
-        $this->crud->setFromDb();
+        $this->crud->addField(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
+        $this->crud->addField(['name' => 'description', 'type' => 'ckeditor', 'label' => 'Description']);
+        $this->crud->addField([
+            'label' => 'Point',
+            'type' => 'select2_multiple',
+            'name' => 'tour_guide_id', // foreign key
+            'entity' => 'tour_guides', // the method that defines the relationship in your Model
+            'attribute' => 'title', // foreign key attribute that is shown to user
+            'model' => Tour_guides::class,
+            'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
+        ]);
     }
 
     protected function setupUpdateOperation()
