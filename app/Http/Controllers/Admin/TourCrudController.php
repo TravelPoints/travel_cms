@@ -49,6 +49,15 @@ class TourCrudController extends CrudController
         $this->crud->setValidation(TourRequest::class);
         $this->crud->addField(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
         $this->crud->addField(['name' => 'description', 'type' => 'ckeditor', 'label' => 'Description']);
+        $this->crud->addField(['name' => 'tag', 'type' => 'text', 'label' => 'Tag']);
+        $this->crud->addField([
+            'label' => 'Language',
+            'type' => 'select',
+            'name' => 'lang_id', // foreign key
+            'entity' => 'language', // the method that defines the relationship in your Model
+            'attribute' => 'lang', // foreign key attribute that is shown to user
+            'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+        ]);
         $this->crud->addField([
             'label' => 'Point',
             'type' => 'select2_multiple',

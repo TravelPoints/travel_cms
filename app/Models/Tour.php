@@ -39,6 +39,11 @@ class Tour extends Model
 //        return $this->hasMany(Tour_guides::class, 'tour_id');
 //    }
 
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'id');
+    }
+
     public function tour_guide_id()
     {
         return $this->belongsToMany(Tour_guides::class, 'tour_points',
