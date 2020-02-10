@@ -28,11 +28,11 @@ class TourCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/tour');
         $this->crud->setEntityNameStrings('tour', 'tours');
 
-        $this->crud->operation('list', function() {
+        $this->crud->operation('list', function () {
             $this->crud->addColumn(['name' => 'duration', 'type' => 'text', 'label' => 'Duration']);
         });
 
-        $this->crud->operation(['create', 'update'], function() {
+        $this->crud->operation(['create', 'update'], function () {
             $this->crud->setValidation(TourRequest::class);
             $this->crud->addField(['name' => 'duration', 'type' => 'text', 'label' => 'Duration']);
         });
@@ -65,6 +65,24 @@ class TourCrudController extends CrudController
             'entity' => 'tour_guides', // the method that defines the relationship in your Model
             'attribute' => 'title', // foreign key attribute that is shown to user
             'model' => Tour_guides::class,
+            'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
+        ]);
+        $this->crud->addField([
+            'label' => 'Country',
+            'type' => 'select2_multiple',
+            'name' => 'country_id', // foreign key
+            'entity' => 'country', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => Tour::class,
+            'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
+        ]);
+        $this->crud->addField([
+            'label' => 'City',
+            'type' => 'select2_multiple',
+            'name' => 'city_id', // foreign key
+            'entity' => 'city', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => Tour::class,
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
         ]);
     }

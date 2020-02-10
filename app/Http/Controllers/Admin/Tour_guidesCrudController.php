@@ -60,7 +60,7 @@ class Tour_guidesCrudController extends CrudController
         $this->crud->setValidation(Tour_guidesRequest::class);
         $this->crud->addField(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
         $this->crud->addField(['name' => 'description', 'type' => 'ckeditor', 'label' => 'Description']);
-//        $this->crud->addField(['name' => 'order', 'type' => 'number', 'label' => 'Order']);
+        $this->crud->addField(['name' => 'text', 'type' => 'ckeditor', 'label' => 'Text']);
         $this->crud->addField(['name' => 'lat', 'type' => 'text', 'label' => 'Latitude']);
         $this->crud->addField(['name' => 'lng', 'type' => 'text', 'label' => 'Longitude']);
 //        $this->crud->addField([
@@ -88,6 +88,9 @@ class Tour_guidesCrudController extends CrudController
             'entity' => 'country', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
             'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),
         ]);
         $this->crud->addField([
             'label' => 'City',
@@ -96,6 +99,9 @@ class Tour_guidesCrudController extends CrudController
             'entity' => 'city', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
             'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),
         ]);
     }
 
