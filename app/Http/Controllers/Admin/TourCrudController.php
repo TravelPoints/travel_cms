@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\TourRequest;
-use App\Models\Language;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Tour_guides;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Tour;
 
 /**
@@ -73,7 +73,7 @@ class TourCrudController extends CrudController
             'name' => 'country_id', // foreign key
             'entity' => 'country', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => Tour::class,
+            'model' => Country::class,
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
         ]);
         $this->crud->addField([
@@ -82,7 +82,7 @@ class TourCrudController extends CrudController
             'name' => 'city_id', // foreign key
             'entity' => 'city', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => Tour::class,
+            'model' => City::class,
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
         ]);
     }

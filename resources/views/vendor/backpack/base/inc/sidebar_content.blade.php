@@ -10,3 +10,5 @@
 {{--<li class='nav-item'><a class='nav-link' href='{{ backpack_url('tour_guides_langs') }}'><i class='nav-icon fa fa-question'></i> Tour_guides_langs</a></li>--}}
 
 {{--<li class='nav-item'><a class='nav-link' href='{{ backpack_url('tour_points') }}'><i class='nav-icon fa fa-question'></i> Tour_points</a></li>--}}
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('tour_country_city_lang') }}'><i class='nav-icon fa fa-question'></i> Tour_country_city_langs</a></li>

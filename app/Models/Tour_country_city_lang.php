@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Tour extends Model
+class Tour_country_city_lang extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Tour extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'tour';
+    protected $table = 'tour_country_city_lang';
     // protected $primaryKey = 'id';
     public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,33 +34,7 @@ class Tour extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-//    public function tour_guides()
-//    {
-//        return $this->hasMany(Tour_guides::class, 'tour_id');
-//    }
 
-    public function language()
-    {
-        return $this->belongsTo(Language::class, 'id');
-    }
-
-    public function tour_guide_id()
-    {
-        return $this->belongsToMany(Tour_guides::class, 'tour_points',
-             'tour_id', 'tour_guide_id');
-    }
-
-    public function country_id()
-    {
-        return $this->belongsToMany(Country::class, 'tour_country_city_lang',
-                'tour_id', 'country_id');
-    }
-
-    public function city_id()
-    {
-        return $this->belongsToMany(City::class, 'tour_country_city_lang',
-             'tour_id', 'city_id');
-    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
