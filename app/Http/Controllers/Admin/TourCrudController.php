@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\TourRequest;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Language;
 use App\Models\Tour_guides;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Models\Tour;
@@ -29,7 +30,24 @@ class TourCrudController extends CrudController
         $this->crud->setEntityNameStrings('tour', 'tours');
 
         $this->crud->operation('list', function () {
+            $this->crud->addColumn(['name' => 'tag', 'type' => 'text', 'label' => 'Tag']);
+            $this->crud->addColumn(['name' => 'language.lang', 'type' => 'text', 'label' => 'Language']);
+            $this->crud->addColumn(['name' => 'country', 'type' => 'text', 'label' => 'Country']);
+            $this->crud->addColumn(['name' => 'city', 'type' => 'text', 'label' => 'City']);
+            $this->crud->addColumn(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
+            $this->crud->addColumn(['name' => 'description', 'type' => 'text', 'label' => 'Description']);
             $this->crud->addColumn(['name' => 'duration', 'type' => 'text', 'label' => 'Duration']);
+        });
+
+        $this->crud->operation('show', function () {
+            $this->crud->addColumn([
+                'name' => 'language.lang',
+                'type' => 'text',
+                'label' => 'Language',
+                'entity' => 'language', // the method that defines the relationship in your Model
+                'attribute' => 'lang', // foreign key attribute that is shown to user
+                'model' => Language::class,
+            ]);
         });
 
         $this->crud->operation(['create', 'update'], function () {

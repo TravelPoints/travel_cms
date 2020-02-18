@@ -9,6 +9,7 @@ use App\Models\Language;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Tour_guides;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Tour_guidesCrudController
@@ -31,6 +32,11 @@ class Tour_guidesCrudController extends CrudController
 
         $this->crud->operation('list', function () {
             $this->crud->addColumn([
+                'label' => 'Language',
+                'type' => 'model_function',
+                'function_name' => 'getLangs',
+            ]);
+            $this->crud->addColumn([
                 'name' => 'country.name',
                 'type' => 'text',
                 'label' => 'Country',
@@ -46,13 +52,15 @@ class Tour_guidesCrudController extends CrudController
                 'attribute' => 'name', // foreign key attribute that is shown to user
                 'model' => City::class,
             ]);
+            $this->crud->addColumn(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
+            $this->crud->addColumn(['name' => 'text', 'type' => 'text', 'label' => 'Text']);
+            $this->crud->addColumn(['name' => 'audio', 'type' => 'text', 'label' => 'Audio']);
         });
     }
 
     protected function setupListOperation()
     {
         $this->crud->setFromDb();
-//        $this->crud->setColumns(['title', 'description']);
     }
 
     protected function setupCreateOperation()
@@ -61,6 +69,16 @@ class Tour_guidesCrudController extends CrudController
         $this->crud->addField(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
         $this->crud->addField(['name' => 'description', 'type' => 'ckeditor', 'label' => 'Description']);
         $this->crud->addField(['name' => 'text', 'type' => 'ckeditor', 'label' => 'Text']);
+        $this->crud->addField([
+            'name' => 'photos',
+            'label' => 'Photos',
+            'type' => 'upload_multiple',
+            'upload' => true,
+//            'disk' => 'uploads', // if you store files in the /public folder, please ommit this; if you store them in /storage or S3, please specify it;
+            // optional:
+//            'temporary' => 10 // if using a service, such as S3, that requires you to make temporary URL's this will make a URL that is valid for the number of minutes specified
+        ]);
+
         $this->crud->addField(['name' => 'lat', 'type' => 'text', 'label' => 'Latitude']);
         $this->crud->addField(['name' => 'lng', 'type' => 'text', 'label' => 'Longitude']);
 //        $this->crud->addField([
@@ -108,5 +126,14 @@ class Tour_guidesCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function setPhotosAttribute($value)
+    {
+        $attribute_name = 'photos';
+        $disk = 'public';
+        $destination_path = 'public/photos';
+
+        $this->uploadMultipleFilesToDisk($value, $attribute_name, $disk, $destination_path);
     }
 }

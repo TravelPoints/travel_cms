@@ -6,6 +6,7 @@ use App\Models\Language;
 use App\Models\Tour;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Tour_guides extends Model
 {
@@ -73,5 +74,19 @@ class Tour_guides extends Model
     {
         return $this->belongsToMany(Language::class, 'tour_guides_langs',
             'tour_guide_id', 'lang_id');
+    }
+
+    public function getLangs()
+    {
+        $data = DB::table('tour_guides_langs')->select(['lang'])
+            ->leftJoin('language', 'tour_guides_langs.lang_id', '=','language.id')
+            ->where('tour_guides_langs.tour_guide_id', '=', $this->id)->get();
+
+        $langs = '';
+        foreach ($data->toArray() as $val) {
+            $langs .= $val->lang . ' ';
+        }
+
+        return $langs;
     }
 }
