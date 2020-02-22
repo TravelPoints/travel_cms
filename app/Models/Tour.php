@@ -42,7 +42,7 @@ class Tour extends Model
 
     public function language()
     {
-        return $this->belongsTo(Language::class, 'id');
+        return $this->belongsTo(Language::class, 'lang_id');
     }
 
     public function tour_guide_id()
