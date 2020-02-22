@@ -22,6 +22,7 @@ class TourCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CloneOperation;
 
     public function setup()
     {
@@ -29,25 +30,22 @@ class TourCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/tour');
         $this->crud->setEntityNameStrings('tour', 'tours');
 
-        $this->crud->operation('list', function () {
+        $this->crud->operation(['list', 'show'], function () {
             $this->crud->addColumn(['name' => 'tag', 'type' => 'text', 'label' => 'Tag']);
-            $this->crud->addColumn(['name' => 'language.lang', 'type' => 'text', 'label' => 'Language']);
+//            $this->crud->addColumn(['name' => 'lang_id', 'type' => 'text', 'label' => 'Language']);
+            $this->crud->addColumn([
+                'label' => 'Language',
+                'type' => 'select',
+                'name' => 'lang_id', // foreign key
+                'entity' => 'language', // the method that defines the relationship in your Model
+                'attribute' => 'lang', // foreign key attribute that is shown to user
+                'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+            ]);
             $this->crud->addColumn(['name' => 'country', 'type' => 'text', 'label' => 'Country']);
             $this->crud->addColumn(['name' => 'city', 'type' => 'text', 'label' => 'City']);
             $this->crud->addColumn(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
             $this->crud->addColumn(['name' => 'description', 'type' => 'text', 'label' => 'Description']);
             $this->crud->addColumn(['name' => 'duration', 'type' => 'text', 'label' => 'Duration']);
-        });
-
-        $this->crud->operation('show', function () {
-            $this->crud->addColumn([
-                'name' => 'language.lang',
-                'type' => 'text',
-                'label' => 'Language',
-                'entity' => 'language', // the method that defines the relationship in your Model
-                'attribute' => 'lang', // foreign key attribute that is shown to user
-                'model' => Language::class,
-            ]);
         });
 
         $this->crud->operation(['create', 'update'], function () {
@@ -58,8 +56,6 @@ class TourCrudController extends CrudController
 
     protected function setupListOperation()
     {
-        // TODO: remove setFromDb() and manually define Columns, maybe Filters
-        $this->crud->setFromDb();
     }
 
     protected function setupCreateOperation()

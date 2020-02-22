@@ -23,6 +23,7 @@ class Tour_guidesCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CloneOperation;
 
     public function setup()
     {
@@ -30,32 +31,37 @@ class Tour_guidesCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/tour_guides');
         $this->crud->setEntityNameStrings('points', 'points');
 
-        $this->crud->operation('list', function () {
-            $this->crud->addColumn([
-                'label' => 'Language',
-                'type' => 'model_function',
-                'function_name' => 'getLangs',
-            ]);
-            $this->crud->addColumn([
-                'name' => 'country.name',
-                'type' => 'text',
-                'label' => 'Country',
-                'entity' => 'country', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-                'model' => Country::class,
-            ]);
-            $this->crud->addColumn([
-                'name' => 'city.name',
-                'type' => 'text',
-                'label' => 'City',
-                'entity' => 'city', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-                'model' => City::class,
-            ]);
-            $this->crud->addColumn(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
-            $this->crud->addColumn(['name' => 'text', 'type' => 'text', 'label' => 'Text']);
-            $this->crud->addColumn(['name' => 'audio', 'type' => 'text', 'label' => 'Audio']);
+        $this->crud->operation(['list', 'show'], function () {
+            $this->setListAndShow();
         });
+    }
+
+    private function setListAndShow(): void
+    {
+        $this->crud->addColumn([
+            'label' => 'Language',
+            'type' => 'model_function',
+            'function_name' => 'getLangs',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'country.name',
+            'type' => 'text',
+            'label' => 'Country',
+            'entity' => 'country', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => Country::class,
+        ]);
+        $this->crud->addColumn([
+            'name' => 'city.name',
+            'type' => 'text',
+            'label' => 'City',
+            'entity' => 'city', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => City::class,
+        ]);
+        $this->crud->addColumn(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
+        $this->crud->addColumn(['name' => 'text', 'type' => 'text', 'label' => 'Text']);
+        $this->crud->addColumn(['name' => 'audio', 'type' => 'text', 'label' => 'Audio']);
     }
 
     protected function setupListOperation()
