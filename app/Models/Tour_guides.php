@@ -25,6 +25,9 @@ class Tour_guides extends Model
 //     protected $fillable = ['title'];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $casts = [
+        'photos' => 'array'
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -79,7 +82,7 @@ class Tour_guides extends Model
     public function getLangs()
     {
         $data = DB::table('tour_guides_langs')->select(['lang'])
-            ->leftJoin('language', 'tour_guides_langs.lang_id', '=','language.id')
+            ->leftJoin('language', 'tour_guides_langs.lang_id', '=', 'language.id')
             ->where('tour_guides_langs.tour_guide_id', '=', $this->id)->get();
 
         $langs = '';
@@ -88,5 +91,25 @@ class Tour_guides extends Model
         }
 
         return $langs;
+    }
+
+    public function setPhotosAttribute($value): void
+    {
+        $attribute_name = 'photos';
+        $disk = 'public';
+        $destination_path = 'tour/points';
+        $this->uploadMultipleFilesToDisk($value, $attribute_name, $disk, $destination_path);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(static function ($obj) {
+            if (count((array)$obj->photos)) {
+                foreach ($obj->photos as $file_path) {
+                    \Storage::disk('public_folder')->delete($file_path);
+                }
+            }
+        });
     }
 }
