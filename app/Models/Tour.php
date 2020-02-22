@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Tour extends Model
 {
@@ -47,19 +48,19 @@ class Tour extends Model
     public function tour_guide_id()
     {
         return $this->belongsToMany(Tour_guides::class, 'tour_points',
-             'tour_id', 'tour_guide_id');
+            'tour_id', 'tour_guide_id');
     }
 
     public function country_id()
     {
         return $this->belongsToMany(Country::class, 'tour_country_city_lang',
-                'tour_id', 'country_id');
+            'tour_id', 'country_id');
     }
 
     public function city_id()
     {
         return $this->belongsToMany(City::class, 'tour_country_city_lang',
-             'tour_id', 'city_id');
+            'tour_id', 'city_id');
     }
     /*
     |--------------------------------------------------------------------------
@@ -78,4 +79,36 @@ class Tour extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function getCountries()
+    {
+        $data = DB::table('tour_country_city_lang')->select(['name'])
+            ->leftJoin('country', 'tour_country_city_lang.country_id', '=', 'country.id')
+            ->where('tour_country_city_lang.tour_id', '=', $this->id)->get();
+
+        $out = '';
+        foreach ($data->toArray() as $val) {
+            if (empty($val) === false) {
+                $out .= $val->name . ' ';
+            }
+        }
+
+        return $out;
+    }
+
+    public function getCities()
+    {
+        $data = DB::table('tour_country_city_lang')->select(['name'])
+            ->leftJoin('city', 'tour_country_city_lang.city_id', '=', 'city.id')
+            ->where('tour_country_city_lang.tour_id', '=', $this->id)->get();
+
+        $out = '';
+        foreach ($data->toArray() as $val) {
+            if (empty($val) === false) {
+                $out .= $val->name . ' ';
+            }
+        }
+
+        return $out;
+    }
 }

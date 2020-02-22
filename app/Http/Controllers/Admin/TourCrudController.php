@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\TourRequest;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\Language;
 use App\Models\Tour_guides;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Models\Tour;
@@ -41,8 +40,16 @@ class TourCrudController extends CrudController
                 'attribute' => 'lang', // foreign key attribute that is shown to user
                 'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
             ]);
-            $this->crud->addColumn(['name' => 'country', 'type' => 'text', 'label' => 'Country']);
-            $this->crud->addColumn(['name' => 'city', 'type' => 'text', 'label' => 'City']);
+            $this->crud->addColumn([
+                'label' => 'Country',
+                'type' => 'model_function',
+                'function_name' => 'getCountries',
+            ]);
+            $this->crud->addColumn([
+                'label' => 'City',
+                'type' => 'model_function',
+                'function_name' => 'getCities',
+            ]);
             $this->crud->addColumn(['name' => 'title', 'type' => 'text', 'label' => 'Title']);
             $this->crud->addColumn(['name' => 'description', 'type' => 'text', 'label' => 'Description']);
             $this->crud->addColumn(['name' => 'duration', 'type' => 'text', 'label' => 'Duration']);
