@@ -47,12 +47,12 @@ class Tour_guides extends Model
 
     public function country()
     {
-        return $this->belongsTo(Country::class, 'id');
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
     public function city()
     {
-        return $this->belongsTo(City::class, 'id');
+        return $this->belongsTo(City::class, 'city_id');
     }
 
     /*
