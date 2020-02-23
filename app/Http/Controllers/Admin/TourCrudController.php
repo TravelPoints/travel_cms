@@ -78,6 +78,9 @@ class TourCrudController extends CrudController
             'entity' => 'language', // the method that defines the relationship in your Model
             'attribute' => 'lang', // foreign key attribute that is shown to user
             'pivot' => false, // on create&update, do you need to add/delete pivot table entries?]);
+            'options' => (function ($query) {
+                return $query->orderBy('lang', 'ASC')->get();
+            }),
         ]);
         $this->crud->addField([
             'label' => 'Point',
@@ -87,6 +90,9 @@ class TourCrudController extends CrudController
             'attribute' => 'title', // foreign key attribute that is shown to user
             'model' => Tour_guides::class,
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
+            'options' => (function ($query) {
+                return $query->orderBy('title', 'ASC')->get();
+            }),
         ]);
         $this->crud->addField([
             'label' => 'Country',
@@ -96,6 +102,9 @@ class TourCrudController extends CrudController
             'attribute' => 'name', // foreign key attribute that is shown to user
             'model' => Country::class,
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),
         ]);
         $this->crud->addField([
             'label' => 'City',
@@ -105,6 +114,9 @@ class TourCrudController extends CrudController
             'attribute' => 'name', // foreign key attribute that is shown to user
             'model' => City::class,
             'pivot' => true, // on create&update, do you need to add/delete pivot table entries?]);
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),
         ]);
     }
 
