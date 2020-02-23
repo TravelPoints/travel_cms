@@ -13,4 +13,10 @@ class FsmController extends Controller
     {
         return (new IlluminateResponse())->setContent(['data' => '0101']);
     }
+
+    public function create(Request $request) : IlluminateResponse
+    {
+        $content = json_decode($request->getContent(), true);
+        return (new IlluminateResponse())->setContent(['data' => $content['data']]);
+    }
 }

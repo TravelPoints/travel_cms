@@ -21,4 +21,5 @@ Route::group(['prefix' => 'v1', 'namespace' => '\\App\\Http\\Controllers'], func
 {
     // basic routes
     Route::get('/fsm/index', 'FsmController@index');
+    Route::post('/fsm/create', 'FsmController@create');
 });
